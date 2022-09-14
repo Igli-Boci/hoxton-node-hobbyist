@@ -9,3 +9,20 @@ datasource db {
   provider = "sqlite"
   url      = "file:./data.db"
 }
+
+model User {
+  id      Int     @id @default(autoincrement())
+  name    String
+  email   String  @unique
+  photo   String?
+  hobbies Hobby[]
+}
+
+model Hobby {
+  id     Int     @id @default(autoincrement())
+  name   String
+  active Boolean @default(true)
+  image  String?
+  user   User    @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId Int
+}
